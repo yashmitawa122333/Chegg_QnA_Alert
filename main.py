@@ -29,6 +29,31 @@ class Chegg():
 
 
     def get_cred(self):
+        # check file present on path or not
+        try:
+            os.path.isfile(settings.CRED_DIR)
+        except Exception as e:
+            raise FileNotFoundError('Credentials JSON is missing.') 
+            print("Creating New Credential File")
+            cred={}
+            print("Enter your chegg username")
+            email = str(input())
+            print("Enter your chegg password")
+            password = str(input())
+            print("Enter your email id")
+            senders_mail = str(input())
+            print("Enter your email password")
+            senders_mail_password = str(input())
+            print("Enter the recivers email id")
+            receivers_mail = str(input())
+            cred["email"] = email
+            cred["password"]= password
+            cred["senders_mail"] =  senders_mail
+            cred["senders_mail_password"] =   senders_mail_password
+            cred["recivers_mail"] = receivers_mail
+            with open(settings.BASE_DIR+"cred.json", "+w") as f:
+                json.dump(cred, f )
+
         with open(settings.CRED_DIR, "+r") as f:
             json_data = json.load(f)
             return json_data
